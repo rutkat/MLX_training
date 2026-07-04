@@ -8,7 +8,7 @@
 
 MLX is an array framework for machine learning on Apple silicon, created by Apple's machine learning research team. If you've ever used NumPy for numerical computing or PyTorch for deep learning, MLX will feel familiar. It provides the same kind of tensor (multi-dimensional array) operations but is specifically designed to take advantage of the unified memory architecture in Apple's M-series chips (M1, M2, M3, M4, and beyond).
 
-For web developers, you can think of MLX as the "Node.js of machine learning frameworks" -- it's designed to be approachable, efficient, and flexible, removing many of the traditional pain points of ML development.
+For web developers, you can think of MLX as the "Node.js of machine learning frameworks". It's designed to be approachable, efficient, and flexible, removing many of the traditional pain points of ML development.
 
 ### 1.2 Why MLX Matters for Web Developers
 
@@ -20,7 +20,7 @@ As a web developer, you might wonder why you should care about yet another ML fr
 
 **Unified Memory.** Unlike traditional setups where you have to shuttle data between CPU memory and GPU memory (a major source of complexity and bugs), Apple silicon has a unified memory architecture. The CPU and GPU share the same memory pool. MLX is designed to exploit this, meaning you don't need to think about device placement the way you do in PyTorch or TensorFlow.
 
-**Lazy Evaluation.** Operations in MLX are lazy -- they build a computation graph but don't execute until you need the results. This enables automatic optimizations and makes it easier to reason about complex computations.
+**Lazy Evaluation.** Operations in MLX are lazy, they build a computation graph but don't execute until you need the results. This enables automatic optimizations and makes it easier to reason about complex computations.
 
 **Composable Transformations.** MLX provides powerful function transformations for automatic differentiation (computing gradients), automatic vectorization (batching), and computation graph optimization. These can be freely composed, so `grad(vmap(grad(fn)))` is perfectly valid.
 
@@ -53,13 +53,13 @@ As a web developer, you might wonder why you should care about yet another ML fr
 
 MLX isn't just a single library. It has a growing ecosystem:
 
-- **mlx** -- The core array framework (what this guide covers)
-- **mlx-lm** -- A package for LLM text generation and fine-tuning
-- **mlx-data** -- Efficient data loading and preprocessing
-- **mlx-vlm** -- Vision Language Model support
-- **mlx-whisper** -- Speech recognition
-- **mlx-examples** -- A rich collection of example implementations
-- **mlx-community** (HuggingFace) -- Pre-converted model weights
+- **mlx** - The core array framework (what this guide covers)
+- **mlx-lm** - A package for LLM text generation and fine-tuning
+- **mlx-data** - Efficient data loading and preprocessing
+- **mlx-vlm** - Vision Language Model support
+- **mlx-whisper** - Speech recognition
+- **mlx-examples** - A rich collection of example implementations
+- **mlx-community** (HuggingFace) - Pre-converted model weights
 
 The official resources you'll want to bookmark:
 
@@ -80,13 +80,6 @@ Before installing MLX, verify your system meets these requirements:
 - **OS**: macOS 14.0 (Sonoma) or later
 - **Python**: 3.10 or later (must be a native ARM64 Python, not x86 via Rosetta)
 
-To check your Python architecture:
-
-```bash
-python -c "import platform; print(platform.processor())"
-# Should output: arm
-# If it outputs: i386 -- you're using Rosetta, switch to native Python
-```
 
 To check your macOS version:
 
@@ -231,7 +224,7 @@ def loss_fn(w, b, x, y):
     pred = predict(x, w, b)
     return mx.mean((pred - y) ** 2)
 
-# Get the gradient function -- differentiate w.r.t. w AND b
+# Get the gradient function, differentiate w.r.t. w AND b
 loss_and_grad = mx.value_and_grad(loss_fn, argnums=[0, 1])
 
 # Training loop
@@ -249,22 +242,22 @@ print(f"\nFinal: weight = {weight.item():.4f} (target: 3.0), "
       f"bias = {bias.item():.4f} (target: 2.0)")
 ```
 
-When you run this, you should see the weight converge toward 3.0 and the bias toward 2.0. Don't worry about understanding every line yet -- we'll cover each concept in detail in the coming chapters.
+When you run this, you should see the weight converge toward 3.0 and the bias toward 2.0. Don't worry about understanding every line yet. We'll cover each concept in detail in the coming chapters.
 
 ### 2.7 Development Tools
 
 Here are some tools that will enhance your MLX development experience:
 
-**Jupyter Notebooks** -- Great for interactive experimentation:
+**Jupyter Notebooks** For interactive experimentation:
 
 ```bash
 pip install jupyter
 jupyter notebook
 ```
 
-**VS Code** -- Excellent Python support with the Python extension. The Jupyter extension also works well for notebook-style development.
+**VS Code** - Excellent Python support with the Python extension. The Jupyter extension also works well for notebook-style development.
 
-**Terminal** -- Since MLX scripts are just Python, any terminal works. Make sure you're running a native ARM terminal (not Rosetta).
+**Terminal** - Since MLX scripts are just Python, any terminal works. Make sure you're running a native ARM terminal (not Rosetta).
 
 ### 2.8 Common Installation Issues
 
@@ -298,48 +291,23 @@ pip list | grep mlx
 # Should show mlx with version number
 ```
 
-### 2.9 Project Structure
+### 2.9 Additional packages (optional
 
-Throughout this guide, we'll use the following project structure:
-
-```
-mlx_training/
-├── guide/                    # This guide (markdown files)
-│   ├── part1_introduction_setup.md
-│   ├── part2_mlx_fundamentals.md
-│   ├── part3_nlp_foundations.md
-│   ├── part4_transformer_architecture.md
-│   ├── part5_training_language_models.md
-│   └── part6_advanced_topics.md
-├── demos/                    # Demo scripts
-│   ├── 01_array_basics.py
-│   ├── 02_lazy_eval.py
-│   ├── 03_autodiff.py
-│   ├── 04_neural_network.py
-│   ├── 05_transformer_block.py
-│   └── ...
-├── projects/                 # Full project implementations
-│   ├── sentiment_classifier/
-│   ├── text_generator/
-│   └── lora_finetune/
-├── mlx_links.txt
-└── requirements.txt
-```
-
+This file is the python package list showing which packages should be installed.
 Let's create the `requirements.txt`:
 
 ```txt
-mlx>=0.21
-numpy>=1.24
-matplotlib>=3.7
-datasets>=2.14
-transformers>=4.35
-sentencepiece>=0.1.99
-tqdm>=4.66
-mlx-lm>=0.19
-safetensors>=0.4
+mlx
+numpy
+matplotlib
+datasets
+transformers
+sentencepiece
+tqdm
+mlx-lm
+safetensors
 ```
 
 ---
 
-**Next**: In Part 2, we'll dive deep into MLX fundamentals -- arrays, operations, lazy evaluation, and the core concepts that underpin everything you'll build with MLX.
+**Next**: [Part 2](https://github.com/rutkat/MLX_training/blob/main/guide/part2_mlx_fundamentals.md)  
