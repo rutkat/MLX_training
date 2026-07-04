@@ -2,11 +2,11 @@
 
 ---
 
-## Chapter 3: Arrays -- The Foundation of Everything
+## Chapter 3: Arrays - The Foundation of Everything
 
 ### 3.1 What is an Array?
 
-In MLX, the `array` is the fundamental data structure -- similar to how JavaScript has `Array` and Python has `list`, but designed for numerical computing. An MLX array is a multi-dimensional container of numerical data that lives in unified memory and can be operated on by both the CPU and GPU without copying.
+In MLX, the `array` is the fundamental data structure similar to how JavaScript has `Array` and Python has `list`, but designed for numerical computing. An MLX array is a multi-dimensional container of numerical data that lives in unified memory and can be operated on by both the CPU and GPU without copying.
 
 If you think of a spreadsheet as a 2D grid of numbers, an MLX array generalizes this concept to any number of dimensions.
 
@@ -118,12 +118,12 @@ Every array has useful properties for inspecting its shape and metadata:
 ```python
 a = mx.array([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])
 
-print(a.shape)     # (2, 3) -- dimensions
-print(a.ndim)      # 2 -- number of dimensions
-print(a.size)      # 6 -- total number of elements
-print(a.dtype)     # float32 -- data type
-print(a.nbytes)    # 24 -- bytes used (6 elements * 4 bytes/float32)
-print(a.itemsize)  # 4 -- bytes per element
+print(a.shape)     # (2, 3) dimensions
+print(a.ndim)      # 2  number of dimensions
+print(a.size)      # 6  total number of elements
+print(a.dtype)     # float32  data type
+print(a.nbytes)    # 24  bytes used (6 elements * 4 bytes/float32)
+print(a.itemsize)  # 4  bytes per element
 print(a.T)         # Transposed: shape (3, 2)
 ```
 
@@ -150,9 +150,9 @@ print(a[-1, -1])     # Last element: 9
 
 # Step slicing
 b = mx.arange(10)
-print(b[::2])        # [0, 2, 4, 6, 8] -- every other element
-print(b[1::2])       # [1, 3, 5, 7, 9] -- odd indices
-print(b[::-1])       # [9, 8, 7, 6, 5, 4, 3, 2, 1, 0] -- reversed
+print(b[::2])        # [0, 2, 4, 6, 8]  every other element
+print(b[1::2])       # [1, 3, 5, 7, 9]  odd indices
+print(b[::-1])       # [9, 8, 7, 6, 5, 4, 3, 2, 1, 0]  reversed
 
 # Boolean indexing
 mask = a > 5
@@ -174,7 +174,7 @@ b = a.reshape(3, 4)           # shape: (3, 4)
 c = a.reshape(2, 2, 3)        # shape: (2, 2, 3)
 
 # Use -1 to auto-infer a dimension
-d = a.reshape(3, -1)          # shape: (3, 4) -- MLX infers the 4
+d = a.reshape(3, -1)          # shape: (3, 4)  MLX infers the 4
 
 # Flatten
 e = c.reshape(-1)             # Back to shape (12,)
@@ -186,7 +186,7 @@ h = g.squeeze()               # shape: (3,)
 i = mx.expand_dims(h, 0)      # shape: (1, 3)
 j = mx.expand_dims(h, 1)      # shape: (3, 1)
 
-# Broadcasting -- operations on different shapes
+# Broadcasting  operations on different shapes
 x = mx.array([[1, 2, 3]])     # shape: (1, 3)
 y = mx.array([[1], [2], [3]]) # shape: (3, 1)
 z = x + y                     # shape: (3, 3) via broadcasting
@@ -195,7 +195,7 @@ z = x + y                     # shape: (3, 3) via broadcasting
 k = mx.broadcast_to(mx.array([1, 2, 3]), (3, 3))  # shape: (3, 3)
 ```
 
-**Web Developer Analogy**: Broadcasting is like CSS flexbox -- it automatically handles size mismatches in predictable ways. A `(1, 3)` array plus a `(3, 1)` array "stretches" to produce a `(3, 3)` result.
+**Web Developer Analogy**: Broadcasting is like CSS flexbox  it automatically handles size mismatches in predictable ways. A `(1, 3)` array plus a `(3, 1)` array "stretches" to produce a `(3, 3)` result.
 
 ### 3.7 Mathematical Operations
 
@@ -239,9 +239,9 @@ print(mx.floor(mx.array([1.1, 2.9])))         # [1, 2]
 
 # Reductions (aggregations)
 c = mx.array([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])
-print(mx.sum(c))           # 21.0 -- sum of all elements
-print(mx.sum(c, axis=0))   # [5.0, 7.0, 9.0] -- sum along rows
-print(mx.sum(c, axis=1))   # [6.0, 15.0] -- sum along columns
+print(mx.sum(c))           # 21.0  sum of all elements
+print(mx.sum(c, axis=0))   # [5.0, 7.0, 9.0]  sum along rows
+print(mx.sum(c, axis=1))   # [6.0, 15.0]  sum along columns
 print(mx.mean(c))          # 3.5
 print(mx.max(c))           # 6.0
 print(mx.min(c))           # 1.0
@@ -292,7 +292,7 @@ print(mx.transpose(M))       # Same
 # Matrix with specific dimensions
 print(mx.transpose(M, (1, 0)))  # Explicit axis order
 
-# Einsum (Einstein summation) -- powerful for complex tensor operations
+# Einsum (Einstein summation)  powerful for complex tensor operations
 a = mx.random.normal((2, 3))
 b = mx.random.normal((3, 4))
 c = mx.einsum("ij,jk->ik", a, b)  # Matrix multiplication via einsum
@@ -364,7 +364,7 @@ mlx_array = mx.array(np_array)  # NumPy -> MLX
 
 ### 4.1 Understanding Lazy Evaluation
 
-This is one of the most important concepts in MLX, and it differs significantly from how PyTorch works (by default). In MLX, operations are **lazy** -- when you write `c = a + b`, no actual addition happens. Instead, MLX records the operation in a computation graph and defers the actual computation until you explicitly request the result.
+This is one of the most important concepts in MLX, and it differs significantly from how PyTorch works (by default). In MLX, operations are **lazy**  when you write `c = a + b`, no actual addition happens. Instead, MLX records the operation in a computation graph and defers the actual computation until you explicitly request the result.
 
 Think of it like a recipe: writing `c = a + b` adds a step to the recipe, but doesn't cook anything. You only start cooking when you call `mx.eval()`.
 
@@ -437,7 +437,7 @@ model = BigModel()  # Graph is built, but no weights allocated yet
 model.load_weights("weights_fp16.safetensors")  # Only fp16 memory used
 ```
 
-**3. Composable Transformations.** Lazy evaluation makes it possible to transform the computation graph before executing it. This is how `grad()` (automatic differentiation) and `vmap()` (vectorization) work -- they rewrite the graph.
+**3. Composable Transformations.** Lazy evaluation makes it possible to transform the computation graph before executing it. This is how `grad()` (automatic differentiation) and `vmap()` (vectorization) work  they rewrite the graph.
 
 ### 4.4 Best Practices for Evaluation
 
@@ -503,7 +503,7 @@ grad_fn = mx.grad(f)
 x = mx.array([1.0, 2.0, 3.0])
 gradient = grad_fn(x)
 mx.eval(gradient)
-print(gradient)  # array([2, 4, 6], dtype=float32) -- which is 2*x
+print(gradient)  # array([2, 4, 6], dtype=float32) which is 2*x
 ```
 
 ### 4.7 Checkpointing for Memory
@@ -574,7 +574,7 @@ grad_fn = mx.grad(loss_fn, argnums=[0, 1])
 # This returns a tuple: (d(loss)/d(weights), d(loss)/d(bias))
 ```
 
-### 5.3 `value_and_grad()` -- Get Both
+### 5.3 `value_and_grad()` Get Both
 
 Often you want both the function value and the gradient (e.g., to track loss during training):
 
@@ -643,7 +643,7 @@ b = mx.array(0.1)
 # Apply to one example
 result = predict(x, w, b)
 
-# Now batch it with vmap -- apply to a batch of inputs
+# Now batch it with vmap and apply to a batch of inputs
 batch_x = mx.random.normal((32, 3))  # 32 inputs, each of size 3
 
 # vmap over the first (0th) argument
@@ -770,7 +770,7 @@ for batch_x, batch_y in dataset:
     mx.eval(model.parameters(), optimizer.state, loss)
 ```
 
-This pattern -- `nn.value_and_grad` + `optimizer.update` + `mx.eval` -- is the core training loop you'll use throughout this guide. Think of it like a React component's lifecycle: `loss_and_grad` computes (render), `optimizer.update` applies changes (commit), and `mx.eval` triggers the actual computation (DOM update).
+This pattern `nn.value_and_grad` + `optimizer.update` + `mx.eval` is the core training loop you'll use throughout this guide. Think of it like a React component's lifecycle: `loss_and_grad` computes (render), `optimizer.update` applies changes (commit), and `mx.eval` triggers the actual computation (DOM update).
 
 ### 5.10 Custom Functions
 
@@ -793,4 +793,5 @@ def my_custom_op_vjp(primals, cotangent):
 
 ---
 
-**Next**: In Part 3, we'll apply these fundamentals to Natural Language Processing -- learning how to represent text as numbers, tokenize it, and prepare it for neural network processing.
+**Next**:  
+[In Part 3](https://github.com/rutkat/MLX_training/blob/main/guide/part3_nlp_foundations.md), we'll apply these fundamentals to Natural Language Processing.
