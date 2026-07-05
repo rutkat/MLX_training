@@ -399,7 +399,7 @@ imported_fn = mx.import_function("exported_model.mlxfn")
 
 ---
 
-## Chapter 15: Putting It All Together -- Building ML-Powered Web Applications
+## Chapter 15: Building ML-Powered Web Applications
 
 ### 15.1 Architecture for ML-Powered Web Apps
 
@@ -418,16 +418,16 @@ As a web developer, you'll want to integrate MLX models into web applications. H
 │       ▼              ▼              ▼        │
 │            Python Backend (FastAPI/Flask)    │
 │  ┌─────────────────────────────────────┐     │
-│  │         MLX Model Server             │     │
+│  │         MLX Model Server            │     │
 │  │  ┌──────────┐  ┌─────────────────┐  │     │
-│  │  │ Tokenizer │  │ Model (MLX)     │  │     │
+│  │  │ Tokenizer│  │ Model (MLX)     │  │     │
 │  │  └──────────┘  └─────────────────┘  │     │
 │  │  ┌──────────┐  ┌─────────────────┐  │     │
-│  │  │ KV Cache  │  │ Response Stream  │  │     │
+│  │  │ KV Cache │  │ Response Stream │  │     │
 │  │  └──────────┘  └─────────────────┘  │     │
 │  └─────────────────────────────────────┘     │
-│                   Mac Server (Apple Silicon)  │
-└───────────────────────────────────────────────┘
+│                   Mac Server (Apple Silicon) │
+└──────────────────────────────────────────────┘
 ```
 
 ### 15.2 Building a Model Server with FastAPI
@@ -541,7 +541,7 @@ async def health():
 ### 15.3 Frontend Integration (JavaScript/TypeScript)
 
 ```typescript
-// chat-client.ts -- Frontend client for the MLX model server
+// chat-client.ts Frontend client for the MLX model server
 
 interface GenerateOptions {
   prompt: string;
@@ -776,10 +776,10 @@ class SimpleRAG:
 7. Deployment: building web APIs with MLX models
 
 **Where to go next:**
-- **MLX Examples**: https://github.com/ml-explore/mlx-examples -- Study production-quality implementations
-- **MLX LM**: The `mlx-lm` package for more advanced LLM usage
-- **HuggingFace MLX Community**: https://huggingface.co/mlx-community -- Pre-converted models
-- **MLX Documentation**: https://ml-explore.github.io/mlx/build/html/index.html -- Full API reference
+**MLX Examples**: https://github.com/ml-explore/mlx-examples Study production-quality implementations  
+**MLX LM**: The `mlx-lm` package for more advanced LLM usage  
+**HuggingFace MLX Community**: https://huggingface.co/mlx-community Pre-converted models  
+**MLX Documentation**: https://ml-explore.github.io/mlx/build/html/index.html Full API reference  
 
 **Advanced topics to explore:**
 - Vision-Language Models (LLaVA, CLIP) with `mlx-vlm`
