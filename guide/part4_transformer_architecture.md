@@ -2,29 +2,23 @@
 
 ---
 
-## Chapter 8: Attention Is All You Need -- Understanding the Transformer
+## Chapter 8: "Attention Is All You Need" Understanding the Transformer
 
 ### 8.1 The Transformer Revolution
 
-Before Transformers, NLP relied on Recurrent Neural Networks (RNNs) and LSTMs, which processed text one token at a time -- like reading a book word by word. The Transformer, introduced in the 2017 paper "Attention Is All You Need" by Vaswani et al., changed everything by processing all tokens in parallel and using "attention" to model relationships between any two positions in a sequence.
+Before Transformers, NLP relied on Recurrent Neural Networks (RNNs) and LSTMs, which processed text one token at a time like reading a book word by word. The Transformer, introduced in the 2017 paper "Attention Is All You Need" by Vaswani et al., changed everything by processing all tokens in parallel and using "attention" to model relationships between any two positions in a sequence.
 
-For web developers: if RNNs are like synchronous sequential code, Transformers are like event-driven asynchronous processing -- everything happens at once, with a coordination mechanism (attention) to manage dependencies.
+For web developers: if RNNs are like synchronous sequential code, Transformers are like event-driven asynchronous processing everything happens at once, with a coordination mechanism (attention) to manage dependencies.
 
-### 8.2 Self-Attention -- The Core Mechanism
+### 8.2 Self-Attention The Core Mechanism
 
 Self-attention allows each position in a sequence to "attend to" (focus on) all other positions. The mechanism uses three learned projections:
 
-- **Query (Q)**: "What am I looking for?"
-- **Key (K)**: "What do I contain?"
-- **Value (V)**: "What information do I provide?"
+- Query (Q): "What am I looking for?"
+- Key (K): "What do I contain?"
+- Value (V): "What information do I provide?"
 
-The attention score between two positions is the dot product of their Query and Key vectors, scaled and normalized:
-
-```
-Attention(Q, K, V) = softmax(Q @ K^T / sqrt(d_k)) @ V
-```
-
-Let's implement this step by step:
+The attention score between two positions is the dot product of their Query and Key vectors, scaled and normalized. Let's implement it step by step:
 
 ```python
 import mlx.core as mx
@@ -212,7 +206,7 @@ output = mx.fast.scaled_dot_product_attention(Q, K, V, scale=1.0 / 32.0)
 mx.eval(output)
 ```
 
-### 8.6 Causal Masking -- For Autoregressive Models
+### 8.6 Causal Masking For Autoregressive Models
 
 For language generation (GPT-style), we need to prevent positions from attending to future positions:
 
@@ -239,7 +233,7 @@ print(mask)
 #  [0, 0, 1, 1],
 #  [0, 0, 0, 1],
 #  [0, 0, 0, 0]]
-# 1 means "blocked" -- position can't see future tokens
+# 1 means "blocked" position can't see future tokens
 
 # Use in attention:
 # scores = scores + (mask * -1e9)  # Adds -infinity to masked positions
@@ -289,7 +283,7 @@ mx.eval(normalized)
 print(f"Mean: {mx.mean(normalized).item():.4f}")  # Should be ~0
 print(f"Std: {mx.std(normalized).item():.4f}")     # Should be ~1
 
-# RMSNorm (used in LLaMA and many modern models -- faster than LayerNorm)
+# RMSNorm (used in LLaMA and many modern models faster than LayerNorm)
 rms_norm = nn.RMSNorm(dims=256)
 normalized_rms = rms_norm(x)
 mx.eval(normalized_rms)
@@ -437,7 +431,7 @@ class BertClassifier(nn.Module):
 
 ### 9.2 Decoder-Only Architecture (GPT-style)
 
-Decoder-only models generate text autoregressively -- predicting one token at a time:
+Decoder-only models generate text autoregressively predicting one token at a time:
 
 ```python
 import mlx.core as mx
@@ -778,7 +772,7 @@ def estimate_memory(model, batch_size=1, seq_len=128, dtype_bytes=4):
 
 ### 9.8 Model Configuration Patterns
 
-Different model sizes for different purposes:
+Pre-defining configurations for different model sizes and purposes.  
 
 ```python
 # Small model (for learning/testing)
@@ -817,4 +811,5 @@ large_config = {
 
 ---
 
-**Next**: In Part 5, we'll put it all together and train language models -- from a small character-level model to fine-tuning large pre-trained models with LoRA.
+**Next**:  
+[In Part 5](https://github.com/rutkat/MLX_training/blob/main/guide/part5_training_language_models.md), training and fine-tuning large pre-trained models with LoRA.
