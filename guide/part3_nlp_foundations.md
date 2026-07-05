@@ -2,7 +2,7 @@
 
 ---
 
-## Chapter 6: Text as Numbers -- Tokenization and Embeddings
+## Chapter 6: Text as Numbers - Tokenization and Embeddings
 
 ### 6.1 Why Text Needs Processing
 
@@ -75,7 +75,7 @@ vocab_size = len(vocab)
 
 #### Subword Tokenization (Modern Standard)
 
-Modern NLP uses subword tokenization -- a balance between character and word level. Common algorithms include BPE (Byte Pair Encoding), WordPiece, and SentencePiece.
+Modern NLP uses subword tokenization, a balance between character and word level. Common algorithms include BPE (Byte Pair Encoding), WordPiece, and SentencePiece.
 
 Let's implement a simple BPE tokenizer:
 
@@ -242,7 +242,7 @@ batch_ids = mx.stack([tokenize(t) for t in texts])
 print(f"Batch shape: {batch_ids.shape}")  # (3, 128)
 ```
 
-### 6.5 Embeddings -- Giving Tokens Meaning
+### 6.5 Embeddings Giving Tokens Meaning
 
 An embedding converts sparse token IDs into dense vectors that capture semantic relationships. Similar words get similar vectors.
 
@@ -299,13 +299,13 @@ king_emb = embedding(mx.array(100))   # Token 100 ("king")
 queen_emb = embedding(mx.array(101))  # Token 101 ("queen")
 apple_emb = embedding(mx.array(200))  # Token 200 ("apple")
 
-# Similarity (before training -- random)
+# Similarity (before training random)
 sim_king_queen = cosine_similarity(king_emb, queen_emb)
 sim_king_apple = cosine_similarity(king_emb, apple_emb)
 mx.eval(sim_king_queen, sim_king_apple)
 print(f"Similarity(king, queen): {sim_king_queen.item():.4f}")
 print(f"Similarity(king, apple): {sim_king_apple.item():.4f}")
-# Before training, these are random -- after training, king/queen should be higher
+# Before training, these are random after training, king/queen should be higher
 ```
 
 ### 6.7 Positional Encoding
@@ -365,10 +365,10 @@ import mlx.nn as nn
 # Sinusoidal positional encoding (built-in)
 sin_pe = nn.SinusoidalPositionalEncoding(d_model)
 
-# Rotary Position Embedding (RoPE) -- used in modern models like LLaMA
+# Rotary Position Embedding (RoPE) used in modern models like LLaMA
 rope = nn.RoPE(dims=d_model)
 
-# ALiBi (Attention with Linear Biases) -- another positional encoding approach
+# ALiBi (Attention with Linear Biases) another positional encoding approach
 alibi = nn.ALiBi()
 ```
 
@@ -460,7 +460,7 @@ class TextPreprocessor:
 
 ### 7.1 Common NLP Tasks
 
-As a web developer entering NLP, here are the main tasks you'll encounter:
+As a machine learning engineer, here are some NLP tasks and patterns you'll encounter. This section includes task-specific python classes and not self-contained executable scripts. They are considered foundational in machine learning and therefore adapted here to MLX.  
 
 | Task | Description | Example |
 |------|-------------|---------|
@@ -473,7 +473,7 @@ As a web developer entering NLP, here are the main tasks you'll encounter:
 
 ### 7.2 The Dataset Object
 
-MLX doesn't have a built-in dataset class, but we can use the HuggingFace `datasets` library and wrap it for MLX:
+MLX doesn't have a built-in dataset class, but we can use the HuggingFace datasets library and wrap it for MLX. The data examples and scripts are for demonstrative purposes. For practice, feel free to use your own data. Free datasets from Kaggle and HuggingFace are good options as well.
 
 ```python
 """Dataset utilities for MLX-based NLP training."""
@@ -541,7 +541,9 @@ class CausalLMDataset(TextDataset):
         }
 ```
 
-### 7.3 Loading Real Datasets
+### 7.3 Loading Real Datasets  
+
+This example loads IMDB's movie review data from Hugging Face https://huggingface.co/datasets/stanfordnlp/imdb  
 
 ```python
 from datasets import load_dataset
@@ -655,7 +657,9 @@ def train(model, dataset, num_epochs=10, batch_size=32, lr=1e-3):
     return model
 ```
 
-### 7.6 Evaluating Models
+### 7.6 Evaluating Models  
+
+Evaluations are crucial in determining model quality. Data is batched processed measuring the total loss value then determining average loss and perplexity.
 
 ```python
 def evaluate(model, dataset, batch_size=32):
@@ -680,13 +684,13 @@ def evaluate(model, dataset, batch_size=32):
     return avg_loss, perplexity
 ```
 
-### 7.7 Perplexity -- Measuring Language Model Quality
+### 7.7 Compute and Measure Perplexity of Language Models
 
 Perplexity is the standard metric for language models. It measures how "surprised" the model is by the test data:
 
-- **Lower perplexity** = better model (less surprised)
-- **Perplexity of 1** = perfect predictions
-- **Perplexity of vocab_size** = random guessing
+- Lower perplexity = better model (less surprised)
+- Perplexity of 1 = perfect predictions
+- Perplexity of vocab_size = random guessing
 
 ```python
 import mlx.core as mx
@@ -706,7 +710,9 @@ def compute_perplexity(model, dataset, batch_size=32):
 # Perplexity ~ 1: Overfitting (memorized training data)
 ```
 
-### 7.8 Data Augmentation for NLP
+### 7.8 Data Augmentation for NLP  
+
+Including randomness such as swapping words and inserting stop words are augmentation techniques used in NLP.  
 
 ```python
 import random
@@ -746,7 +752,7 @@ class TextAugmenter:
 
 ### 7.9 Handling Large Datasets with Streaming
 
-For datasets too large to fit in memory:
+For datasets too large to fit in memory, the preferred processing method is through streaming.  
 
 ```python
 from datasets import load_dataset
@@ -785,7 +791,9 @@ def stream_batches(dataset, tokenizer, batch_size=32, max_length=128):
             }
 ```
 
-### 7.10 Train/Validation/Test Splits
+### 7.10 Train/Validation/Test Splits  
+
+Split ratios depend on the total size of the dataset. For small datasets, under 10k rows use a 60/20/20 split. is typical to ensure stable estimates. For medium datasets 10k–1M rows, 80/10/10 are standard defaults. For large datasets >1M rows, ratios like 98/1/1 are used because even 1% provides statistically significant validation and test sets. 
 
 ```python
 from datasets import load_dataset
@@ -807,4 +815,5 @@ print(f"Test: {len(test_data)} examples")
 
 ---
 
-**Next**: In Part 4, we'll dive deep into the Transformer architecture -- the neural network design that powers modern NLP, from BERT to GPT to LLaMA.
+**Next**:  
+[In Part 4](https://github.com/rutkat/MLX_training/blob/main/guide/part4_transformer_architecture.md), we'll dive deep into the Transformer architecture.
