@@ -6,7 +6,7 @@
 
 ### 10.1 Project Overview
 
-We'll build a character-level language model from scratch -- the "Hello World" of language modeling. This small model will teach you the complete training pipeline that scales to much larger models.
+We'll build a character-level language model from scratch. This small model will teach you the complete training pipeline that scales to much larger models.
 
 **Goal**: Train a model to generate text character by character, learning from a training corpus.
 
@@ -492,9 +492,9 @@ print(f"Bad prediction loss: {nn.losses.cross_entropy(bad_logits, target).item()
 
 ### 12.1 Why Fine-Tuning?
 
-Training a large language model from scratch requires enormous compute and data. Fine-tuning adapts a pre-trained model to a specific task using much less data and compute. It's like how a web developer who knows JavaScript can quickly learn TypeScript -- the foundation is already there.
+Training a large language model from scratch requires enormous compute and data. Fine-tuning adapts a pre-trained model to a specific task using much less data and compute. It's like how a web developer who knows JavaScript can quickly learn TypeScript the foundation is already there.
 
-### 12.2 LoRA -- Low-Rank Adaptation
+### 12.2 LoRA Low-Rank Adaptation
 
 LoRA is a parameter-efficient fine-tuning technique. Instead of updating all model weights, LoRA adds small "adapter" matrices that are trained while the original weights stay frozen:
 
@@ -525,8 +525,8 @@ class LoRALinear(nn.Module):
         out_features = base_linear.weight.shape[0]
 
         # LoRA matrices
-        # A: (in_features, rank) -- initialized with Kaiming
-        # B: (rank, out_features) -- initialized with zeros
+        # A: (in_features, rank) initialized with Kaiming
+        # B: (rank, out_features) initialized with zeros
         self.lora_A = mx.random.normal(shape=(in_features, rank)) * 0.01
         self.lora_B = mx.zeros((rank, out_features))
 
@@ -820,4 +820,5 @@ def load_checkpoint(model, optimizer, path):
 
 ---
 
-**Next**: In Part 6, we'll cover advanced topics including model optimization, distributed training, and deploying MLX models in web applications.
+**Next**:  
+[In Part 6](https://github.com/rutkat/MLX_training/blob/main/guide/part6_advanced_topics.md) advanced topics including model optimization, distributed training, and deploying MLX models.
